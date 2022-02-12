@@ -34,16 +34,21 @@ class StoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Store $store)
     {
-      $store = Store::create([
-        'name' => $request->name,
-        'description' => $request->description,
-        // 暫定で１を入れておく。本来ならログインユーザー
-        'user_id' => 1,
-      ]);
+      // ddd($request->user()->id);
+      // $store = Store::create([
+      //   'name' => $request->name,
+      //   'description' => $request->description,
+      //   'user_id' => $request->user()->id,
+      // ]);
 
-      ddd($store);
+      $store->name = $request->name;
+      $store->description = $request->description;
+      $store->user_id = $request->user()->id;
+      $store->save();
+
+      // ddd($store);
 
       return redirect()->route('stores.index');
     }
@@ -56,7 +61,9 @@ class StoreController extends Controller
      */
     public function show($id)
     {
-        //
+      $store = Store::find($id);
+
+      return view("stores.show", ["store" => $store]);
     }
 
     /**
@@ -67,7 +74,9 @@ class StoreController extends Controller
      */
     public function edit($id)
     {
-        //
+      $store = Store::find($id);
+
+      return view("stores.edit", ["store" => $store]);
     }
 
     /**
@@ -79,7 +88,15 @@ class StoreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $store = Store::find($id);
+      // ddd($store);
+
+      $store->name = $request->name;
+      $store->description = $request->description;
+      $store->user_id = $request->user()->id;
+      $store->save();
+
+      return redirect()->route('stores.index');
     }
 
     /**

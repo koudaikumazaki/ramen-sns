@@ -5,11 +5,8 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header">投稿一覧</div>
-          {{-- <button type="button" class="btn btn-primary mb-3 d-block w-100" onclick="location.href='{{route('stores.create')}}">
-            新規投稿
-          </button> --}}
-          <a href="{{ route('stores.create') }}" class="btn btn-primary mb-3 d-block w-100">新規投稿</a>
+        <div class="card-header">記事詳細</div>
+
         <div class="card-body">
           <div class="table-resopnsive">
             <table class="table table-striped">
@@ -20,16 +17,22 @@
                 </tr>
               </thead>
               <tbody>
-                @if(isset($stores))
-                @foreach ($stores as $store)
+                @if(isset($store))
                 <tr>
-                  <td><a href="{{ route('stores.show', [ $store->id ]) }}">{{ $store->name }}</a></td>
+                  <td>{{ $store->name }}</a></td>
                   <td>{{ $store->description }}</td>
                 </tr>
-                @endforeach
                 @endif
               </tbody>
             </table>
+            @if(isset($store))
+            <div class="text-center">
+                <button type="button" class="btn btn-secondary" onClick="history.back()">戻る</button>
+                <button type="button" class="btn btn-primary ml-3" onClick="location.href='{{ route('stores.edit', $store->id) }}'">
+                    編集
+                </button>
+            </div>
+            @endif
           </div>
         </div>
       </div>
