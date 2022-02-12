@@ -107,6 +107,8 @@ class StoreController extends Controller
      */
     public function destroy($id)
     {
-        //
+      Store::destroy($id);
+
+      return redirect()->route('stores.index');
     }
 }
