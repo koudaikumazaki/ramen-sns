@@ -25,7 +25,7 @@ class StoreController extends Controller
      */
     public function create()
     {
-        //
+      return view("stores.create");
     }
 
     /**
@@ -36,7 +36,16 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $store = Store::create([
+        'name' => $request->name,
+        'description' => $request->description,
+        // 暫定で１を入れておく。本来ならログインユーザー
+        'user_id' => 1,
+      ]);
+
+      ddd($store);
+
+      return redirect()->route('stores.index');
     }
 
     /**
