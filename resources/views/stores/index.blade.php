@@ -6,9 +6,6 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">投稿一覧</div>
-          {{-- <button type="button" class="btn btn-primary mb-3 d-block w-100" onclick="location.href='{{route('stores.create')}}">
-            新規投稿
-          </button> --}}
           <a href="{{ route('stores.create') }}" class="btn btn-primary mb-3 d-block w-100">新規投稿</a>
         <div class="card-body">
           <div class="table-resopnsive">

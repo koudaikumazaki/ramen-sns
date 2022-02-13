@@ -1,0 +1,55 @@
+<template>
+  <div>
+    <button
+      type="button"
+      class="btn m-0 p-1 shadow-none"
+    >
+      <i class="fas fa-heart mr-1"
+        :class="{'text-danger' : this.isLikedBy}"
+        @click="clickLike"
+      />
+    </button>
+    {{ this.countLikes }}
+  </div>
+</template>
+
+<script>
+  export default {
+    props: {
+      initialIsLikedBy: {
+        type: Boolean,
+        default: false,
+      },
+      initialCountLikes: {
+        type: Number,
+        default: 0,
+      },
+      endpoint: {
+        type: String,
+      },
+    },
+    data() {
+      return {
+        isLikedBy: this.initialIsLikedBy,
+        countLikes: this.initialCountLikes,
+      }
+    },
+    methods: {
+      clickLike() {
+        this.isLikedBy ? this.unlike() : this.like()
+      },
+      async like() {
+        const response = await axios.put(this.endpoint)
+
+        this.isLikedBy = true
+        this.countLikes = response.data.countLikes
+      },
+      async unlike() {
+        const response = await axios.delete(this.endpoint)
+
+        this.isLikedBy = false
+        this.countLikes = response.data.countLikes
+      }
+    }
+  }
+</script>

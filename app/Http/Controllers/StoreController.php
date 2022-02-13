@@ -111,4 +111,27 @@ class StoreController extends Controller
 
       return redirect()->route('stores.index');
     }
+
+    public function like(Request $request, $id)
+    {
+      $store = Store::find($id);
+      $store->likes()->detach($request->user()->id);
+      $store->likes()->attach($request->user()->id);
+
+      return [
+        'id' => $store->id,
+        'countLikes' => $store->count_likes,
+      ];
+    }
+    
+    public function unlike(Request $request, $id)
+    {
+      $store = Store::find($id);
+      $store->likes()->detach($request->user()->id);
+
+      return [
+        'id' => $store->id,
+        'countLikes' => $store->count_likes,
+      ];
+    }
 }

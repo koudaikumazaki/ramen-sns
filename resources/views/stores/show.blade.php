@@ -27,17 +27,23 @@
             </table>
             @if(isset($store))
             <div class="text-center">
-                <button type="button" class="btn btn-secondary" onClick="history.back()">戻る</button>
-                <button type="button" class="btn btn-primary ml-3" onClick="location.href='{{ route('stores.edit', $store->id) }}'">
-                    編集
+              <button type="button" class="btn btn-secondary" onClick="history.back()">戻る</button>
+              <button type="button" class="btn btn-primary ml-3" onClick="location.href='{{ route('stores.edit', $store->id) }}'">
+                  編集
+              </button>
+              <form style="display:inline" action="{{ route('stores.destroy', $store->id) }}" method="post">
+                @method('DELETE')
+                @csrf
+                <button type="submit" class="btn btn-danger ml-3">
+                    {{ __('削除') }}
                 </button>
-                <form style="display:inline" action="{{ route('stores.destroy', $store->id) }}" method="post">
-                  @method('DELETE')
-                  @csrf
-                  <button type="submit" class="btn btn-danger ml-3">
-                      {{ __('削除') }}
-                  </button>
               </form>
+              <store-like
+                :initial-is-liked-by='@json($store->isLikedBy(Auth::user()))'
+                :initial-count-likes='@json($store->count_likes)'
+                endpoint={{ route('stores.like', ['store' => $store]) }}
+              >
+              </store-like>
             </div>
             @endif
           </div>

@@ -17,3 +17,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('stores', StoreController::class);
+Route::prefix('stores')->name('stores.')->group(function(){
+  Route::put('/{store}/like', 'StoreController@like')->name('like');
+  Route::delete('/{store}/like', 'StoreController@unlike')->name('unlike');
+});
